@@ -1,0 +1,11 @@
+agent-framework==1.14.0
+agent-framework-gemini==1.0.0b260813
+google-genai==2.18.1
+python-dotenv
+chromadb
+requests
+beautifulsoup4
+langchain-text-splitters
+sentence-transformers
+yfinance
+mcp
