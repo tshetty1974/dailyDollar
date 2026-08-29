@@ -13,7 +13,7 @@ load_dotenv()
 
 gemini_client = GeminiChatClient(
     api_key=os.environ["GEMINI_API_KEY"],
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash-lite"",
 )
 
 fundamentals_agent = Agent(

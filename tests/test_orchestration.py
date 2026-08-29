@@ -1,94 +1,71 @@
+"""
+Test 4 — the full pipeline end to end.
+
+This is the expensive one: a complete five-analyst Magentic run per
+candidate, plus one synthesis call. Start with a single ticker.
+
+To test multi-stock allocation later, add "AMD" to tickers below. That
+roughly doubles the cost and runtime.
+
+Run:  PYTHONPATH=src python3 tests/test_orchestration.py
+"""
+
 import asyncio
 
-from orchestration.investment_orchestrator import workflow
+from models import Horizon, InvestmentRequest, RiskAppetite
+from orchestration.investment_orchestrator import run_investment_research
 
 
 async def main():
 
-    ticker = "NVDA"
+    request = InvestmentRequest(
+        tickers=["NVDA", "AMD"],
+        amount=50_000,
+        risk_appetite=RiskAppetite.MODERATE,
+        horizon=Horizon.LONG,
+        constraints=["No more than 40% in a single position"],
+    )
 
-    print("\n>>> STARTING MAGENTIC ORCHESTRATION\n")
+    print("=" * 70)
+    print("ORCHESTRATION TEST")
+    print("=" * 70)
+    print(request.objective_brief())
 
-    task = f"""
-Conduct a complete investment research analysis of {ticker}.
-
-Follow the research workflow defined by the manager.
-
-Start with:
-1. Fundamentals
-2. Technical
-3. News & Sentiment
-
-Only after those Phase 1 analyses are complete, proceed to:
-4. Macro / Thesis
-
-Only after Macro / Thesis is complete, proceed to:
-5. Risk
-
-Finally, synthesize all findings.
-"""
-
-    result = await workflow.run(task)
+    recommendation = await run_investment_research(request)
 
     print("\n")
+
+    if recommendation is None:
+        print("FAILED: no structured recommendation was produced.")
+        return
+
+    print(recommendation.render(request))
+
+    # --- checks -------------------------------------------------
+    print("\n" + "=" * 70)
+    print("CHECKS")
     print("=" * 70)
-    print("ORCHESTRATION EVENTS")
-    print("=" * 70)
 
-    for event in result:
-        event_type = getattr(event, "type", None)
+    covered = {stock.ticker for stock in recommendation.stocks}
 
-        if event_type == "superstep_started":
-            print(
-                f"\n--- SUPERSTEP STARTED "
-                f"(iteration={event.iteration}) ---"
-            )
+    print(
+        "every candidate covered:",
+        covered == set(request.tickers),
+        f"(got {sorted(covered)})",
+    )
 
-        elif event_type == "superstep_completed":
-            print(
-                f"--- SUPERSTEP COMPLETED "
-                f"(iteration={event.iteration}) ---"
-            )
+    print("allocations balance to 100%:", recommendation.is_balanced())
 
-        elif event_type == "group_chat":
-            data = event.data
+    cited = all(
+        stock.evidence and all(e.source for e in stock.evidence)
+        for stock in recommendation.stocks
+    )
+    print("every stock cites at least one source:", cited)
 
-            participant_name = getattr(
-                data,
-                "participant_name",
-                None,
-            )
-
-            if participant_name:
-                print(
-                    f"   >>> MANAGER DELEGATED TO: "
-                    f"{participant_name}"
-                )
-
-        elif event_type == "executor_invoked":
-            executor_id = event.executor_id
-
-            if executor_id != "magentic_orchestrator":
-                print(
-                    f"   >>> AGENT INVOKED: "
-                    f"{executor_id}"
-                )
-
-        elif event_type == "executor_completed":
-            executor_id = event.executor_id
-
-            if executor_id != "magentic_orchestrator":
-                print(
-                    f"   <<< AGENT COMPLETED: "
-                    f"{executor_id}"
-                )
-
-        elif event_type == "output":
-            print("\n>>> FINAL OUTPUT RECEIVED")
-
-            print(event.data)
-
-    print("\n>>> FINISHED MAGENTIC ORCHESTRATION")
+    within_cap = all(
+        stock.allocation_percent <= 40 for stock in recommendation.stocks
+    )
+    print("respects the 40% single-position constraint:", within_cap)
 
 
 if __name__ == "__main__":

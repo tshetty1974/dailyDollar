@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -15,7 +16,7 @@ load_dotenv()
 
 gemini_client = GeminiChatClient(
     api_key=os.environ["GEMINI_API_KEY"],
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash-lite",
 )
 
 
@@ -36,13 +37,14 @@ market_tool = MCPStdioTool(
         "Market data tools for retrieving current "
         "and historical stock prices."
     ),
-    command="python3",
+    command=sys.executable,
     args=[
         str(MARKET_SERVER_PATH)
     ],
     allowed_tools=[
         "get_stock_price",
         "get_historical_prices",
+        "get_technical_indicators",
     ],
 )
 
@@ -187,5 +189,7 @@ Avoid repeating the same information.
 Keep the final response concise and useful to the other
 agents in the investment research pipeline.
 
-"""
+""",
+
+    tools=[market_tool],
 )
