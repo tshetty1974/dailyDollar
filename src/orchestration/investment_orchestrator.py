@@ -1,9 +1,10 @@
+import asyncio
 import os
 
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
-from agent_framework import Agent, ChatOptions
+from agent_framework import Agent, ChatOptions, FileCheckpointStorage
 from agent_framework.gemini import GeminiChatClient
 from agent_framework.orchestrations import MagenticBuilder
 
@@ -15,6 +16,16 @@ from agents.risk import risk_agent
 from agents.bull import bull_agent
 from agents.synthesis import synthesis_agent
 from agents.evaluator import evaluator_agent
+
+from memory.checkpoint import (
+    clear_checkpoint,
+    clear_workflow_checkpoints,
+    load_checkpoint,
+    save_checkpoint,
+)
+from memory.store import load_memory, save_memory
+
+from observability import trace_run
 
 from models import (
     Evaluation,
@@ -44,6 +55,38 @@ gemini_client = GeminiChatClient(
 # Generous enough that a multi-stock recommendation cannot be cut off
 # mid-object, which would produce unparseable JSON.
 SYNTHESIS_MAX_TOKENS = 8000
+
+
+# Where the framework persists each Magentic workflow's internal state.
+WORKFLOW_CHECKPOINT_DIR = "data/checkpoints/workflows"
+
+
+# Framework-level workflow checkpointing.
+#
+# When enabled, the framework persists each Magentic workflow's internal
+# state -- conversation history, task ledger, progress -- under
+# WORKFLOW_CHECKPOINT_DIR.
+#
+# KNOWN GAP: nothing reads these back yet. Resuming a half-finished
+# orchestration would mean loading that workflow's latest checkpoint and
+# continuing from it, which is not wired up. Resumption today comes from
+# memory/checkpoint.py, which skips candidates that already completed --
+# that is where the expensive repetition actually is.
+#
+# Worth watching: a full state snapshot is pickled on every save, so the
+# directory grows quickly (around 20 files across a few runs).
+ENABLE_WORKFLOW_CHECKPOINTS = True
+
+
+# A stalled model call leaves the workflow waiting on its event queue
+# forever, with nothing printed -- indistinguishable from merely being
+# slow. This ceiling turns that silence into a diagnosable failure.
+#
+# Set generously on purpose. Observed orchestrations have ranged from
+# about 20 seconds to nearly two minutes just to reach their first tool
+# call, so a tight limit would abort healthy runs, which is worse than
+# no limit at all.
+ORCHESTRATION_TIMEOUT_SECONDS = 900
 
 
 PARTICIPANT_NAMES = [
@@ -162,9 +205,13 @@ def build_workflow():
 
     A new workflow is built per stock rather than shared, so that one
     candidate's conversation cannot leak into the next one's analysis.
+
+    Framework-level checkpointing writes workflow state but is not yet
+    read back; see ENABLE_WORKFLOW_CHECKPOINTS above. Resumption is
+    provided by memory/checkpoint.py, which skips completed candidates.
     """
 
-    return MagenticBuilder(
+    builder = MagenticBuilder(
         participants=[
             fundamentals_agent,
             technical_agent,
@@ -179,7 +226,14 @@ def build_workflow():
         # could close the loop.
         max_round_count=25,
         max_stall_count=3,
-    ).build()
+    )
+
+    if ENABLE_WORKFLOW_CHECKPOINTS:
+        builder = builder.with_checkpointing(
+            FileCheckpointStorage(WORKFLOW_CHECKPOINT_DIR)
+        )
+
+    return builder.build()
 
 
 # ============================================================
@@ -320,7 +374,25 @@ async def research_stock(request: InvestmentRequest, ticker: str) -> dict[str, l
 
     workflow = build_workflow()
 
-    events = await workflow.run(task)
+    try:
+        events = await asyncio.wait_for(
+            workflow.run(task),
+            timeout=ORCHESTRATION_TIMEOUT_SECONDS,
+        )
+
+    except asyncio.TimeoutError:
+
+        # Everything researched before this candidate is already on
+        # disk, so the run is resumable: re-running the same command
+        # skips the finished stocks and retries only this one.
+        raise TimeoutError(
+            f"[{ticker}] orchestration exceeded "
+            f"{ORCHESTRATION_TIMEOUT_SECONDS}s with no response.\n"
+            f"This usually means the model API is rate limiting or a "
+            f"request has stalled.\n"
+            f"Progress up to this point is checkpointed — wait a minute "
+            f"and re-run the same command to resume from here."
+        ) from None
 
     findings = collect_findings(events)
 
@@ -855,6 +927,30 @@ async def run_investment_research(
     request: InvestmentRequest,
 ) -> PortfolioRecommendation | None:
     """
+    Run a full analysis inside a single trace.
+
+    The root span exists so a dashboard shows one waterfall per run
+    rather than a scattering of unrelated fragments, and so the run's
+    parameters are attached to something searchable.
+    """
+
+    with trace_run(
+        f"investment_research {','.join(request.tickers)}",
+        **{
+            "investment.user_id": request.user_id,
+            "investment.tickers": ",".join(request.tickers),
+            "investment.amount": request.amount,
+            "investment.risk_appetite": request.risk_appetite.value,
+            "investment.horizon": request.horizon.value,
+        },
+    ):
+        return await _run_investment_research(request)
+
+
+async def _run_investment_research(
+    request: InvestmentRequest,
+) -> PortfolioRecommendation | None:
+    """
     Research every candidate, draft a recommendation, debate it, redraft
     in light of the debate, then have the result critiqued.
 
@@ -864,7 +960,21 @@ async def run_investment_research(
     the outcome" from a claim into an observable diff.
     """
 
-    all_findings: dict[str, dict[str, list[str]]] = {}
+    # --- resume any partial run -----------------------------------
+    #
+    # The checkpoint is found by fingerprinting the request, so simply
+    # re-running the same command picks up where the last attempt died.
+    checkpoint = load_checkpoint(request)
+
+    if checkpoint.findings or checkpoint.pre_debate:
+        print(f"\n>>> RESUMING RUN {checkpoint.run_id}")
+        print(f">>> already done: {checkpoint.progress(DEBATE_KEY)}")
+    else:
+        print(f"\n>>> STARTING RUN {checkpoint.run_id}")
+
+    # The orchestrator and the checkpoint share one dict, so every
+    # mutation below is captured by the next save.
+    all_findings = checkpoint.findings
 
     # --- phase 1: research ----------------------------------------
     #
@@ -875,23 +985,49 @@ async def run_investment_research(
 
         for ticker in request.tickers:
 
+            if checkpoint.has_research(ticker):
+                print(f">>> [{ticker}] already researched — skipping")
+                continue
+
             all_findings[ticker] = await research_stock(request, ticker)
+
+            # Saved per candidate rather than per phase: a crash on the
+            # third stock must not cost the first two.
+            save_checkpoint(checkpoint)
 
     # --- phase 2: pre-debate draft --------------------------------
 
-    print("\n>>> DRAFTING PRE-DEBATE RECOMMENDATION")
+    if checkpoint.pre_debate is not None:
 
-    pre_debate = await synthesise(request, all_findings)
+        print("\n>>> REUSING CHECKPOINTED PRE-DEBATE DRAFT")
+
+        pre_debate = checkpoint.pre_debate
+
+    else:
+
+        print("\n>>> DRAFTING PRE-DEBATE RECOMMENDATION")
+
+        pre_debate = await synthesise(request, all_findings)
+
+        checkpoint.pre_debate = pre_debate
+
+        save_checkpoint(checkpoint)
 
     # --- phase 3: debate ------------------------------------------
 
     for ticker in request.tickers:
+
+        if checkpoint.has_debate(ticker, DEBATE_KEY):
+            print(f">>> [{ticker}] already debated — skipping")
+            continue
 
         all_findings[ticker][DEBATE_KEY] = await run_debate(
             ticker,
             all_findings[ticker],
             request,
         )
+
+        save_checkpoint(checkpoint)
 
     # --- phase 4: post-debate recommendation ----------------------
 
@@ -938,5 +1074,35 @@ async def run_investment_research(
         # parse; a failed rewrite should not lose a usable answer.
         if revised is not None:
             recommendation = revised
+
+    # --- phase 6: remember ----------------------------------------
+    #
+    # Only the final, post-debate, evaluator-approved answer is stored.
+    # The pre-debate draft was a control artifact for measuring the
+    # debate's effect, and nobody should be able to ask follow-up
+    # questions about advice that was superseded.
+    memory = load_memory(request.user_id)
+
+    memory.remember(request, recommendation)
+
+    save_memory(memory)
+
+    print(
+        f"\n>>> SAVED TO MEMORY — user '{request.user_id}', "
+        f"{len(memory.history)} recommendation(s) on record"
+    )
+
+    # The run finished, so its partial state is no longer useful. Left
+    # behind, it would make the next identical request return these
+    # findings instead of researching afresh -- a resume mechanism
+    # quietly turning into a stale cache.
+    clear_checkpoint(checkpoint)
+
+    # The framework's workflow checkpoints are written on every save and
+    # never read back, so they would otherwise grow without limit.
+    removed = clear_workflow_checkpoints(WORKFLOW_CHECKPOINT_DIR)
+
+    if removed:
+        print(f">>> cleared {removed} workflow checkpoint file(s)")
 
     return recommendation
