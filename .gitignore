@@ -8,3 +8,6 @@ __pycache__/
 .idea/
 data/chroma/
 data/sec/
+data/memory/
+data/checkpoints/
+data/traces/
