@@ -1,12 +1,50 @@
+# Microsoft Agent Framework (Python) -- mandatory per the brief.
+# The orchestrations package is a separate install and provides
+# MagenticBuilder; without it the orchestrator will not import.
 agent-framework==1.14.0
+agent-framework-orchestrations==1.1.0
 agent-framework-gemini==1.0.0b260813
+
+# LLM provider
 google-genai==2.18.1
-python-dotenv
+
+# Data contracts for the request, recommendation and evaluation, and for
+# the persisted memory and checkpoint files.
+pydantic
+
+# RAG over SEC filings: local vector store plus the embedding model.
 chromadb
+sentence-transformers
+langchain-text-splitters
+
+# Filing download and parsing (SEC EDGAR), and the news API.
 requests
 beautifulsoup4
-langchain-text-splitters
-sentence-transformers
+
+# Market data, served through the MCP server in src/mcp/market_server.py
 yfinance
 mcp
-docker
+
+# Agent-to-Agent protocol: exposes the Risk Analyst as a service that
+# other runtimes can call. Only needed for src/a2a_server.py and
+# tests/test_a2a.py; the main pipeline runs without them.
+agent-framework-a2a==1.0.0b260730
+a2a-sdk==1.1.2
+starlette
+uvicorn
+
+# Observability. The SDK is required for the span processor; the OTLP
+# exporter is only used when OTEL_EXPORTER_OTLP_TRACES_ENDPOINT is set,
+# but is listed so that viewing traces in a dashboard needs no extra
+# install.
+opentelemetry-sdk==1.44.0
+opentelemetry-exporter-otlp-proto-grpc==1.44.0
+
+# Configuration
+python-dotenv
+
+# NOTE: Docker is NOT listed here. Viewing traces in Jaeger needs the
+# docker CLI, which is a system tool installed via Homebrew, not a
+# Python package. The PyPI package named "docker" is a client library
+# for controlling Docker from Python and is not used by this project.
+# See the README for the optional dashboard setup.

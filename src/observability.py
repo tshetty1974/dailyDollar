@@ -1,3 +1,27 @@
+"""
+Tracing for a full run: which agent ran, for how long, and at what cost.
+
+The Agent Framework already instruments its agents, tool calls and
+workflows with OpenTelemetry. This module turns that on and makes it
+readable in three ways:
+
+  * a live one-line-per-span timeline, so a long run visibly progresses
+    instead of sitting silent -- the absence of which made "slow" and
+    "hung" indistinguishable during development
+  * a complete trace written to data/traces/last_run.log, overwritten
+    each run
+  * an end-of-run summary of latency and token usage per agent, which is
+    what makes a trace answer "where did the time and the money go?"
+
+Set OTEL_EXPORTER_OTLP_TRACES_ENDPOINT to also ship spans to a dashboard
+(Jaeger, Aspire, Azure Monitor). Everything here works without one.
+
+Note the _TRACES_ variant specifically: the generic
+OTEL_EXPORTER_OTLP_ENDPOINT also routes metrics, and Jaeger implements
+the OTLP traces service but not the metrics one, so every metric export
+fails noisily against it.
+"""
+
 import time
 from collections import defaultdict
 from contextlib import contextmanager
@@ -23,7 +47,11 @@ OUTPUT_TOKEN_KEYS = (
     "gen_ai.usage.completion_tokens",
 )
 
-.
+# Framework plumbing spans. They fire in their dozens at ~0.00s and bury
+# the model calls and tool calls that actually matter, so they are hidden
+# from the live terminal view. They are still counted in the summary and
+# still written to the log file and the dashboard -- a trace that hides
+# real work would misrepresent the run.
 NOISE_PREFIXES = (
     "edge_group.process",
     "message.send",
@@ -299,9 +327,9 @@ def print_report() -> None:
 
     TIMELINE._write("\n" + report)
 
+    # The file is left open on purpose. A conversational session can run
+    # several analyses, and each wants its summary appended; closing
+    # here would silently stop logging after the first one. Python
+    # closes it at process exit.
     if TIMELINE.log is not None:
-
         print(f"\nfull trace written to {TIMELINE.log.name}")
-
-        TIMELINE.log.close()
-        TIMELINE.log = None
