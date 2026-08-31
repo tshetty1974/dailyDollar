@@ -202,9 +202,7 @@ Add `--trace` to stream spans live in the terminal.
 
 ### Sample trace
 
-A full run's trace is committed in [`docs/`](docs/) - the exported timeline and
-summary from one two-candidate run, plus screenshots of the same run in Jaeger.
-
+A full run's trace is committed in [`docs/`](docs/)
 ### Optional: view traces in a dashboard
 
 The system emits standard OTLP, so any compatible backend works. Jaeger needs no
@@ -222,12 +220,7 @@ OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4317
 OTEL_SERVICE_NAME=dailydollar
 ```
 
-Open http://localhost:16686. **No code change** - Jaeger is never named in the
-source. Aspire Dashboard or Azure Monitor work the same way.
-
-> Use the `_TRACES_` variable specifically. The generic
-> `OTEL_EXPORTER_OTLP_ENDPOINT` also routes metrics, which Jaeger does not
-> implement, producing a stream of export errors.
+Open http://localhost:16686. 
 
 ---
 
@@ -293,15 +286,7 @@ app.py                       Streamlit chat UI
 
 ---
 
-## Known limitations
+## Other design information
 
-Documented honestly in [DESIGN.md](DESIGN.md), including the framework-level
-workflow checkpoints that are written but not read back, the untested
-substitution of the remote Risk Analyst into the orchestrator, and where the
-evaluator's calibration has not been verified.
+Please check DESIGN.MD for full documnetation
 
-## Cost profile
-
-A two-candidate run is roughly **40 model calls, ~1.4M input tokens, ~7 minutes**.
-The manager accounts for about a quarter of input tokens on its own, because the
-whole conversation is resent every round. See DESIGN.md.
