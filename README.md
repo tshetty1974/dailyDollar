@@ -2,8 +2,8 @@
 
 A multi-agent investment research system built on the **Microsoft Agent Framework**.
 
-Given one or more candidate stocks and an investment objective — amount, risk
-appetite, time horizon — a team of specialist agents researches each candidate
+Given one or more candidate stocks and an investment objective - amount, risk
+appetite, time horizon - a team of specialist agents researches each candidate
 from a different analytical angle, a bull and a skeptic debate the findings, a
 critic scores the draft, and the system returns a grounded recommendation with a
 suggested portfolio allocation.
@@ -12,7 +12,7 @@ It is conversational and remembers you between sessions:
 
 ```
 you> I have 50k, fairly cautious, 5 years out. What about NVDA and AMD?
-assistant> Starting the analysis now — this takes a few minutes...
+assistant> Starting the analysis now - this takes a few minutes...
            [full recommendation with allocations, evidence and risks]
 
 you> why only 30% in NVDA?
@@ -35,7 +35,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**2. Configure** — create `.env` in the repo root:
+**2. Configure** - create `.env` in the repo root:
 
 ```
 GEMINI_API_KEY=your_key_here
@@ -91,7 +91,7 @@ flowchart TB
 
     Assistant["Investment Assistant<br/><i>AgentSession · UserMemoryProvider</i>"]
 
-    subgraph Research["Per candidate — Magentic orchestration"]
+    subgraph Research["Per candidate - Magentic orchestration"]
         Manager["Research Manager<br/><i>plans, delegates, decides when done</i>"]
         Fund["Fundamentals"]
         Tech["Technical"]
@@ -100,7 +100,7 @@ flowchart TB
         Risk["Risk"]
     end
 
-    subgraph Debate["Structured debate — 3 turns"]
+    subgraph Debate["Structured debate - 3 turns"]
         Bull["Bull Analyst"]
         Skeptic["Risk Analyst<br/><i>as skeptic</i>"]
     end
@@ -118,6 +118,9 @@ flowchart TB
         Mem[("data/memory<br/>profile · holdings · history")]
         Ckpt[("data/checkpoints<br/>partial run state")]
     end
+
+    A2A["A2A server :9999<br/><i>agent card + JSON-RPC</i>"]
+    Ext([External runtime])
 
     Otel["OpenTelemetry<br/><i>spans → log + Jaeger</i>"]
 
@@ -138,8 +141,11 @@ flowchart TB
     Debate --> Synth
     PreDraft -.->|compared against| Synth
     Synth --> Eval
-    Eval -->|revise once| Synth
+    Eval -->|revise once: re-synthesise,<br/>no new research| Synth
     Eval -->|accept| Mem
+
+    Risk -.->|also served over A2A| A2A
+    Ext -.->|calls without importing| A2A
 
     Research -.-> Ckpt
     Research & Debate & Synth & Eval -.-> Otel
@@ -147,19 +153,19 @@ flowchart TB
 
 ### The pipeline, in order
 
-1. **Research** — for each candidate, a Magentic workflow runs five specialists
+1. **Research** - for each candidate, a Magentic workflow runs five specialists
    through four phases. The manager decides who speaks and when there is enough
    evidence.
-2. **Draft #1** — synthesis produces a recommendation *without* the debate.
-3. **Debate** — the Bull opens, the Skeptic attacks, the Bull responds. Three
+2. **Draft #1** - synthesis produces a recommendation *without* the debate.
+3. **Debate** - the Bull opens, the Skeptic attacks, the Bull responds. Three
    turns, both sides given identical evidence.
-4. **Draft #2** — synthesis runs again, now seeing the debate *and* its own
+4. **Draft #2** - synthesis runs again, now seeing the debate *and* its own
    earlier draft, and is told to change its numbers where the skeptic landed.
-5. **Debate impact** — the two drafts are diffed. Any change is attributable to
+5. **Debate impact** - the two drafts are diffed. Any change is attributable to
    the debate alone.
-6. **Evaluation** — a critic scores evidence quality, risks addressed, and fit
+6. **Evaluation** - a critic scores evidence quality, risks addressed, and fit
    to constraints, and can send a weak draft back once.
-7. **Memory** — the accepted recommendation is written to disk.
+7. **Memory** - the accepted recommendation is written to disk.
 
 ---
 
@@ -167,7 +173,7 @@ flowchart TB
 
 | # | Requirement | Where | Notes |
 |---|---|---|---|
-| 3.1 | Multi-agent research team | `src/agents/` | 7 agents: fundamentals, technical, news, macro, risk, bull, synthesis — plus an evaluator |
+| 3.1 | Multi-agent research team | `src/agents/` | 7 agents: fundamentals, technical, news, macro, risk, bull, synthesis - plus an evaluator |
 | 3.2 | Central orchestration | `investment_orchestrator.py` | Magentic (`MagenticBuilder`), manager-led |
 | 3.3 | Structured debate | `run_debate()` | 3 turns; impact measured by diffing pre/post-debate drafts |
 | 3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores 1–5 on the brief's three criteria; one bounded revision |
@@ -196,7 +202,7 @@ Add `--trace` to stream spans live in the terminal.
 
 ### Sample trace
 
-A full run's trace is committed in [`docs/`](docs/) — the exported timeline and
+A full run's trace is committed in [`docs/`](docs/) - the exported timeline and
 summary from one two-candidate run, plus screenshots of the same run in Jaeger.
 
 ### Optional: view traces in a dashboard
@@ -216,7 +222,7 @@ OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4317
 OTEL_SERVICE_NAME=dailydollar
 ```
 
-Open http://localhost:16686. **No code change** — Jaeger is never named in the
+Open http://localhost:16686. **No code change** - Jaeger is never named in the
 source. Aspire Dashboard or Azure Monitor work the same way.
 
 > Use the `_TRACES_` variable specifically. The generic
@@ -238,7 +244,7 @@ PYTHONPATH=src python3 tests/test_a2a.py
 ```
 
 The client fetches the agent card from `/.well-known/agent-card.json`, then
-sends it a thesis to pressure-test. It never imports the agent — the test
+sends it a thesis to pressure-test. It never imports the agent - the test
 asserts the module was never loaded in that process.
 
 ---
