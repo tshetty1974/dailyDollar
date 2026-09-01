@@ -443,9 +443,9 @@ analysis down with them.
 
 ### 5.1 Conversational interface
 
-![Streamlit chat](images/ui-chat.png)
+![Streamlit chat](docsimages/ui-chat.png)
 
-![Terminal session](images/terminal-session.png)
+![Terminal session](docs/images/terminal-session.png)
 
 ### 5.2 A recommendation
 
