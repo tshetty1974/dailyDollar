@@ -27,10 +27,7 @@ A run researches each candidate through a manager-led workflow, produces a draft
 recommendation, subjects it to a bull-versus-skeptic debate, redrafts in light of
 that debate, has a critic score the result, and writes the accepted answer to
 long-term memory. Each recommendation must carry evidence items that name their
-source, and every step emits an OpenTelemetry span. Note the precise scope: the
-schema enforces attribution on the evidence list, not on the narrative fields
-(thesis, risks, assumptions) - see section 7.
-
+source, and every step emits an OpenTelemetry span.
 ### 1.3 Scope boundaries
 
 - **Fundamentals are only grounded for companies whose filings have been ingested.**
@@ -41,19 +38,22 @@ schema enforces attribution on the evidence list, not on the narrative fields
 
 ## 2. Requirements traceability 
 
-Here requirement is serialised in accordance to the functional requirements provided
+The brief numbers its functional requirements 3.1 to 3.9. This document cites
+them as **R3.1** to **R3.9**, keeping them distinct from its own section numbers,
+which also run 3.1, 3.2 and so on. The table below is the key: any "R3.x"
+elsewhere in this document resolves here.
 
 | # | Requirement | Implemented in | Evidence |
 |---|---|---|---|
-| 3.1 | Multi-agent research team | 8 in `src/agents/`, plus the manager and the conversational assistant | Each has a bounded remit and explicit prohibitions |
-| 3.2 | Central orchestration | `investment_orchestrator.py` - `MagenticBuilder` | Manager plans, delegates, decides sufficiency |
-| 3.3 | Structured debate | `run_debate()` - 3 turns | Impact measured by diffing pre/post-debate drafts |
-| 3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores the brief's three criteria; bounded revision |
-| 3.5 | Grounding via RAG | `src/rag/`, `tools/sec_tools.py` | `source` is a required field on every evidence item |
-| 3.6 | Short- & long-term memory | `src/memory/` | `AgentSession` + `ContextProvider`; survives restart |
-| 3.7 | Checkpointing & resumption | `memory/checkpoint.py` | Completed candidates skipped on resume |
-| 3.8 | MCP & A2A | `src/mcp/`, `src/a2a_server.py` | Market data over MCP; Risk Analyst served over A2A |
-| 3.9 | Observability | `src/observability.py` | Spans → live timeline, log file, OTLP dashboard |
+| R3.1 | Multi-agent research team | 8 in `src/agents/`, plus the manager and the conversational assistant | Each has a bounded remit and explicit prohibitions |
+| R3.2 | Central orchestration | `investment_orchestrator.py` - `MagenticBuilder` | Manager plans, delegates, decides sufficiency |
+| R3.3 | Structured debate | `run_debate()` - 3 turns | Impact measured by diffing pre/post-debate drafts |
+| R3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores the brief's three criteria; bounded revision |
+| R3.5 | Grounding via RAG | `src/rag/`, `tools/sec_tools.py` | `source` is a required field on every evidence item |
+| R3.6 | Short- & long-term memory | `src/memory/` | `AgentSession` + `ContextProvider`; survives restart |
+| R3.7 | Checkpointing & resumption | `memory/checkpoint.py` | Completed candidates skipped on resume |
+| R3.8 | MCP & A2A | `src/mcp/`, `src/a2a_server.py` | Market data over MCP; Risk Analyst served over A2A |
+| R3.9 | Observability | `src/observability.py` | Spans → live timeline, log file, OTLP dashboard |
 
 ---
 
@@ -234,8 +234,8 @@ the same definition of the user's constraints.
 
 | Field | Constraint | Requirement it enforces |
 |---|---|---|
-| `stocks[].evidence[].source` | required | 3.5 traceability |
-| `stocks[].debate_resolution` | required | 3.3 "not decorative" |
+| `stocks[].evidence[].source` | required | R3.5 traceability |
+| `stocks[].debate_resolution` | required | R3.3 "not decorative" |
 | `stocks[].assumptions` | min 1 | Explainability NFR |
 | `stocks[].key_risks` | min 1 | Explainability NFR |
 | `stocks[].conviction` | 1–5 | Confidence, distinct from verdict |
@@ -344,7 +344,7 @@ heading.
 the *draft*, not the evidence gathering: a breached constraint or an unaddressed
 risk is a write-up problem, and re-running five analysts would not fix it while
 costing several minutes. The corollary is a real limit - if a draft is weak
-because the evidence is thin, the loop cannot ask for more research. See §7.
+because the evidence is thin, the loop cannot ask for more research.
 
 ### 4.7 RAG pipeline
 
@@ -487,7 +487,7 @@ A full exported trace is in [`sample-trace.log`](docs/sample-trace.log).
 ## 6. Key decisions and trade-offs
 
 - **Debate runs outside Magentic.** The manager decides for itself what is worth
-  doing; 3.3 requires a debate every run. Trade-off: less native, but guaranteed
+  doing; R3.3 requires a debate every run. Trade-off: less native, but guaranteed
   and three predictable calls.
 - **Synthesis runs twice.** Draft before the debate, draft after, then diff.
   Trade-off: one extra call, in exchange for the debate's effect being
@@ -495,7 +495,7 @@ A full exported trace is in [`sample-trace.log`](docs/sample-trace.log).
 - **Exactly one agent allocates.** Prevents allocation logic leaking into five
   prompts and gives constraints a single enforcement point.
 - **Structured output only at the boundary.** Specialists stay prose; the schema
-  makes 3.5 and 3.3 mechanically enforceable. Trade-off: a required field
+  makes R3.5 and R3.3 mechanically enforceable. Trade-off: a required field
   guarantees presence, not truth.
 - **Specialists' raw text, not the manager's summary.** Citations survive.
   Trade-off: a larger synthesis prompt.
@@ -524,7 +524,7 @@ A full exported trace is in [`sample-trace.log`](docs/sample-trace.log).
 - **The reflection loop can only re-synthesise, never re-research.** critique goes back into a fresh synthesis call over the same findings. That matches what the evaluator scores - a breached constraint or an unaddressed risk is a write-up problem, fixable from evidence already gathered. It also matches what a second research pass would actually yield: the analysts query the same filings, the same market data and the same news, so re-running them returns much the same evidence at several minutes' cost. Escalating to more research would mostly buy a slower version of the same answer.
 - **The post-debate synthesis sees its own earlier draft**, When a recommendation is accepted, its allocations are recorded as the user's holdings. Nothing confirms execution, because the system is a research tool with no brokerage integration - there is no source of truth for what was actually bought. The consequence is bounded: holdings are context for later conversations, not an input to any calculation, so a stale entry degrades a follow-up answer rather than corrupting an analysis.
 - **Holdings assume the user acted on the advice.** When a recommendation is accepted, its allocations are recorded as the user's holdings. Nothing confirms execution, because the system is a research tool with no brokerage integration - there is no source of truth for what was actually bought. The consequence is bounded: holdings are context for later conversations, not an input to any calculation, so a stale entry degrades a follow-up answer rather than corrupting an analysis.
-- **Only the ingested companies can be grounded.** Fundamentals are retrieved from the vector store, so a company whose filings have not been ingested has no evidence base. This is a direct consequence of requirement 3.5 rather than an oversight: analysing such a company on remembered financials is exactly what "grounded in retrieved source documents" forbids. The system does not refuse - the technical, news and macro analysts work on any listed company - but it names the missing grounding in the output and the conviction score should be read accordingly.
+- **Only the ingested companies can be grounded.** Fundamentals are retrieved from the vector store, so a company whose filings have not been ingested has no evidence base. This is a direct consequence of requirement R3.5 rather than an oversight: analysing such a company on remembered financials is exactly what "grounded in retrieved source documents" forbids. The system does not refuse - the technical, news and macro analysts work on any listed company - but it names the missing grounding in the output and the conviction score should be read accordingly.
 - **Interrupting a run leaks the MCP subprocess** - The market-data server runs as a stdio subprocess inside an async context manager. On KeyboardInterrupt the interpreter tears down before the context manager's cleanup runs, leaving an orphaned process. It is idle and harmless - it holds no ports and shares no state - but it accumulates across interrupted runs and has to be cleared manually. A signal handler around the session would fix it.
 
 ## 8. Future scope

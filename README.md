@@ -173,15 +173,15 @@ flowchart TB
 
 | # | Requirement | Where | Notes |
 |---|---|---|---|
-| 3.1 | Multi-agent research team | `src/agents/` | 10 agents: fundamentals, technical, news, macro, risk, bull, synthesis, evaluator, plus the orchestration manager and the conversational assistant |
-| 3.2 | Central orchestration | `investment_orchestrator.py` | Magentic (`MagenticBuilder`), manager-led |
-| 3.3 | Structured debate | `run_debate()` | 3 turns; impact measured by diffing pre/post-debate drafts |
-| 3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores 1–5 on the brief's three criteria; one bounded revision |
-| 3.5 | Grounding via RAG | `src/rag/`, `tools/sec_tools.py` | Chroma + MiniLM over 10-Ks; `source` is a required field on every evidence item |
-| 3.6 | Short & long-term memory | `src/memory/` | `AgentSession` for the thread; `ContextProvider` for cross-session recall |
-| 3.7 | Checkpointing & resumption | `memory/checkpoint.py` | Run-level: completed candidates skipped on resume. See limitations |
-| 3.8 | MCP & A2A | `src/mcp/`, `src/a2a_server.py` | Market data over MCP; Risk Analyst exposed over A2A with card discovery |
-| 3.9 | Observability | `src/observability.py` | OTel spans → live timeline, log file, and any OTLP dashboard |
+| R3.1 | Multi-agent research team | `src/agents/` | 10 agents: fundamentals, technical, news, macro, risk, bull, synthesis, evaluator, plus the orchestration manager and the conversational assistant |
+| R3.2 | Central orchestration | `investment_orchestrator.py` | Magentic (`MagenticBuilder`), manager-led |
+| R3.3 | Structured debate | `run_debate()` | 3 turns; impact measured by diffing pre/post-debate drafts |
+| R3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores 1–5 on the brief's three criteria; one bounded revision |
+| R3.5 | Grounding via RAG | `src/rag/`, `tools/sec_tools.py` | Chroma + MiniLM over 10-Ks; `source` is a required field on every evidence item |
+| R3.6 | Short & long-term memory | `src/memory/` | `AgentSession` for the thread; `ContextProvider` for cross-session recall |
+| R3.7 | Checkpointing & resumption | `memory/checkpoint.py` | Run-level: completed candidates skipped on resume. See limitations |
+| R3.8 | MCP & A2A | `src/mcp/`, `src/a2a_server.py` | Market data over MCP; Risk Analyst exposed over A2A with card discovery |
+| R3.9 | Observability | `src/observability.py` | OTel spans → live timeline, log file, and any OTLP dashboard |
 
 ---
 
