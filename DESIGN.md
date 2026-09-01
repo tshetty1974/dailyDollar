@@ -18,12 +18,18 @@ remember the user across sessions, and be traceable end to end.
 
 ### 1.2 What the system does
 
-Eight agents, one orchestration, three persistence layers and two front ends.
+Ten agents and one orchestration, reachable through a terminal CLI and a
+Streamlit chat UI, with the Risk Analyst additionally served over A2A to other
+runtimes. State persists in three places: the user's long-term memory, per-run
+checkpoints, and the SEC vector store.
+
 A run researches each candidate through a manager-led workflow, produces a draft
 recommendation, subjects it to a bull-versus-skeptic debate, redrafts in light of
 that debate, has a critic score the result, and writes the accepted answer to
-long-term memory. Every claim in the output names its source; every step emits
-an OpenTelemetry span.
+long-term memory. Each recommendation must carry evidence items that name their
+source, and every step emits an OpenTelemetry span. Note the precise scope: the
+schema enforces attribution on the evidence list, not on the narrative fields
+(thesis, risks, assumptions) - see section 7.
 
 ### 1.3 Scope boundaries
 
@@ -40,7 +46,7 @@ an OpenTelemetry span.
 
 | # | Requirement | Implemented in | Evidence |
 |---|---|---|---|
-| 3.1 | Multi-agent research team | `src/agents/` - 8 agents | Each has a bounded remit and explicit prohibitions |
+| 3.1 | Multi-agent research team | 8 in `src/agents/`, plus the manager and the conversational assistant | Each has a bounded remit and explicit prohibitions |
 | 3.2 | Central orchestration | `investment_orchestrator.py` - `MagenticBuilder` | Manager plans, delegates, decides sufficiency |
 | 3.3 | Structured debate | `run_debate()` - 3 turns | Impact measured by diffing pre/post-debate drafts |
 | 3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores the brief's three criteria; bounded revision |
@@ -196,15 +202,16 @@ flowchart TB
 
 | Agent | Input | Tools | Output |
 |---|---|---|---|
-| Research Manager | Task + objective | - | Delegation decisions, Phase 4 consolidation |
-| Fundamentals | SEC evidence injected into the task | - | Financial health, valuation, risks |
+| Investment Assistant | The user's message, plus what is remembered about them | - | A conversational reply, the intent, and any extracted parameters |
+| Research Manager | The research task and the user's objective | - | Who speaks next, and a closing consolidation of the analysts |
+| Fundamentals | SEC filing evidence, injected into the task | - | Financial health, valuation, fundamental risks |
 | Technical | Ticker | MCP: price, history, indicators | Trend, momentum, volatility |
 | News & Sentiment | Ticker | `search_news` | Events, catalysts, sentiment |
-| Macro & Thesis | Phase 1 findings | - | Industry, secular trends, thesis |
-| Risk | All prior findings | - | Vulnerabilities, downside scenarios |
-| Bull | Same findings as skeptic | - | The strongest honest case for |
-| Synthesis & Allocation | All findings + debate + objective | - | `PortfolioRecommendation` |
-| Evaluator | The draft + objective | - | `Evaluation` |
+| Macro & Thesis | The fundamentals, technical and news findings | - | Industry trends, secular drivers, long-term thesis |
+| Risk | Every finding gathered so far | - | Vulnerabilities, downside scenarios |
+| Bull | The same findings the skeptic receives | - | The strongest honest case in favour |
+| Synthesis & Allocation | All findings, the debate transcript, the objective | - | `PortfolioRecommendation` |
+| Evaluator | The synthesised `PortfolioRecommendation`, plus the objective | - | `Evaluation` |
 
 Every specialist prompt forbids allocation, so exactly one agent sizes positions.
 
@@ -285,6 +292,21 @@ sequenceDiagram
 `MagenticBuilder` with five participants, `max_round_count=25`,
 `max_stall_count=3`. A **fresh workflow per candidate**, so one stock's
 conversation cannot leak into another's.
+
+The manager is instructed to work through four phases. It decides who speaks and
+when a phase is complete; the phases give it an order to work in rather than
+leaving the sequence entirely to its judgement:
+
+| Phase | What happens |
+|---|---|
+| 1 | Fundamentals, Technical and News & Sentiment establish the evidence base |
+| 2 | Macro & Thesis evaluates the long-term case using those findings |
+| 3 | Risk pressure-tests everything gathered so far |
+| 4 | The manager notes agreements, disagreements and open questions, then stops |
+
+The manager is explicitly forbidden from recommending or sizing positions in
+phase 4. Its consolidation is passed to synthesis as one more input, not as a
+conclusion.
 
 The manager's closing summary is captured, but synthesis receives the
 specialists' **raw text**: the manager compresses "$39,520M in marketable
@@ -502,6 +524,14 @@ A full exported trace is in [`sample-trace.log`](sample-trace.log).
 - **Required fields guarantee presence, not truth.** Before the debate existed,
   the model wrote a plausible `debate_resolution` describing one that never
   happened.
+- **Attribution is enforced on the evidence list only.** Every `EvidenceItem`
+  must carry a `source`, but the narrative fields - `thesis`, `key_risks`,
+  `assumptions` and `summary` - are free text and are not individually sourced. A
+  statement such as "total reliance on third-party foundries in Taiwan" reaches
+  the user with no citation behind it. The schema also checks only that a source
+  was *given*, not that it is real: "general knowledge" would validate. Extending
+  attribution to the narrative fields, and checking source strings against the
+  retrieved chunks, are both worth doing.
 - **Holdings assume the user acted on the advice.** No execution confirmation.
 - **Memory grows without pruning.** The recall brief is bounded; the file is not.
 - **Only the ingested companies can be grounded.** Others are analysed without
@@ -608,7 +638,7 @@ src/
 ├── observability.py     OpenTelemetry wiring and trace summary
 ├── universe.py          which companies can be grounded
 ├── a2a_server.py        Risk Analyst as an A2A service
-├── agents/              the eight agents
+├── agents/              eight agents (manager and assistant live elsewhere)
 ├── orchestration/       Magentic workflow, debate, synthesis, evaluation
 ├── memory/              long-term memory, context provider, checkpoints
 ├── mcp/                 market-data MCP server

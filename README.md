@@ -173,7 +173,7 @@ flowchart TB
 
 | # | Requirement | Where | Notes |
 |---|---|---|---|
-| 3.1 | Multi-agent research team | `src/agents/` | 7 agents: fundamentals, technical, news, macro, risk, bull, synthesis - plus an evaluator |
+| 3.1 | Multi-agent research team | `src/agents/` | 10 agents: fundamentals, technical, news, macro, risk, bull, synthesis, evaluator, plus the orchestration manager and the conversational assistant |
 | 3.2 | Central orchestration | `investment_orchestrator.py` | Magentic (`MagenticBuilder`), manager-led |
 | 3.3 | Structured debate | `run_debate()` | 3 turns; impact measured by diffing pre/post-debate drafts |
 | 3.4 | Reflection & evaluation | `agents/evaluator.py`, `evaluate()` | Scores 1–5 on the brief's three criteria; one bounded revision |
@@ -275,7 +275,7 @@ src/
 ├── observability.py         OpenTelemetry wiring, trace summary
 ├── universe.py              which companies can be grounded
 ├── a2a_server.py            Risk Analyst as an A2A service
-├── agents/                  the eight agents
+├── agents/                  eight agents (manager + assistant live elsewhere)
 ├── orchestration/           Magentic workflow, debate, synthesis, evaluation
 ├── memory/                  long-term memory, context provider, checkpoints
 ├── mcp/                     market-data MCP server
@@ -288,5 +288,5 @@ app.py                       Streamlit chat UI
 
 ## Other design information
 
-Please check DESIGN.MD for full documnetation
+Please check DESIGN.MD for full documentation
 
