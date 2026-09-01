@@ -443,34 +443,44 @@ analysis down with them.
 
 ### 5.1 Conversational interface
 
-![Streamlit chat](docsimages/ui-chat.png)
+![Streamlit chat](docs/images/ui-chat.png)
 
 ![Terminal session](docs/images/terminal-session.png)
 
 ### 5.2 A recommendation
 
-![Recommendation](images/recommendation.png)
+![Recommendation](docs/images/recommendation.png)
+![Recommendation2](docs/images/recommendation2.png)
 
 Each position carries a verdict, conviction, allocation, thesis, assumptions,
 evidence with named sources, key risks, and what the debate changed.
 
 ### 5.3 Debate impact
 
-![Debate impact](images/debate-impact.png)
+![Debate impact](docs/images/debate-impact.png)
 
 ### 5.4 Checkpoint resume
 
-![Checkpoint resume](images/checkpoint-resume.png)
+Keyboard interrupt during seconf stock candidate analysis run
+![Checkpoint resume](docs/images/checkpoint-resume.png)
+
+Resume from checkpoint
+![Checkpoint resume2](docs/images/checkpoint-resume2.png)
+
 
 ### 5.5 Observability
 
-![Jaeger waterfall](images/jaeger-waterfall.png)
+![Jaeger waterfall](docs/images/jaeger-waterfall.png)
 
-![Span attributes](images/jaeger-span.png)
+![Jaeger waterfall2](docs/images/jaeger-waterfall2.png)
 
-![Trace summary](images/trace-summary.png)
+![Span attributes](docs/images/jaeger-span.png)
 
-A full exported trace is in [`sample-trace.log`](sample-trace.log).
+![Flowchart](docs/images/jaeger-flowchart.png)
+
+![Trace summary](docs/images/trace-summary.png)
+
+A full exported trace is in [`sample-trace.log`](docs/sample-trace.log).
 
 ---
 

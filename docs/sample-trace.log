@@ -1,0 +1,749 @@
+run started 2026-08-30T16:02:39.916438
+
+    [trace +  21.7s] chat gemini-3.5-flash-lite                     1.21s  1779 in / 92 out
+    [trace +  21.7s] invoke_agent Investment Assistant              1.22s  1779 in / 92 out
+    [trace +  70.4s] chat gemini-3.5-flash-lite                     1.34s  1884 in / 147 out
+    [trace +  70.4s] invoke_agent Investment Assistant              1.35s  1884 in / 147 out
+    [trace + 134.4s] chat gemini-3.5-flash-lite                     2.10s  2062 in / 198 out
+    [trace + 134.4s] invoke_agent Investment Assistant              2.10s  2062 in / 198 out
+    [trace + 189.6s] chat gemini-3.5-flash-lite                     1.82s  2274 in / 148 out
+    [trace + 189.6s] invoke_agent Investment Assistant              1.83s  2274 in / 148 out
+    [trace + 190.3s] initialize                                     0.55s
+    [trace + 190.3s] tools/list                                     0.00s
+    [trace + 190.3s] prompts/list                                   0.00s
+    [trace + 196.1s] workflow.build                                 0.00s
+    [trace + 196.1s] edge_group.process InternalEdgeGroup           0.00s
+    [trace + 199.0s] chat gemini-3.5-flash-lite                     2.93s  4048 in / 522 out
+    [trace + 199.0s] invoke_agent Investment Research Manager       2.93s  4048 in / 522 out
+    [trace + 201.2s] chat gemini-3.5-flash-lite                     2.19s  4742 in / 291 out
+    [trace + 201.2s] invoke_agent Investment Research Manager       2.19s  4742 in / 291 out
+    [trace + 203.5s] chat gemini-3.5-flash-lite                     2.29s  6894 in / 405 out
+    [trace + 203.5s] invoke_agent Investment Research Manager       2.29s  6894 in / 405 out
+    [trace + 203.5s] message.send                                   0.00s
+    [trace + 203.5s] executor.process magentic_orchestrator         7.42s
+    [trace + 203.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 203.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 203.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 203.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 203.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 208.0s] chat gemini-3.5-flash-lite                     4.41s  744 in / 795 out
+    [trace + 208.0s] invoke_agent Fundamentals Analyst              4.41s  744 in / 795 out
+    [trace + 208.0s] message.send                                   0.00s
+    [trace + 208.0s] executor.process Fundamentals Analyst          4.42s
+    [trace + 208.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 208.1s] message.send                                   0.00s
+    [trace + 208.1s] message.send                                   0.00s
+    [trace + 208.1s] message.send                                   0.00s
+    [trace + 208.1s] message.send                                   0.00s
+    [trace + 210.7s] chat gemini-3.5-flash-lite                     2.64s  7805 in / 330 out
+    [trace + 210.7s] invoke_agent Investment Research Manager       2.65s  7805 in / 330 out
+    [trace + 210.7s] message.send                                   0.00s
+    [trace + 210.7s] executor.process magentic_orchestrator         2.65s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] executor.process Technical Analyst             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 210.8s] executor.process Risk Analyst                  0.00s
+    [trace + 210.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 212.1s] chat gemini-3.5-flash-lite                     1.35s  1857 in / 45 out
+    [trace + 212.9s] tools/call get_stock_price                     0.79s
+    [trace + 212.9s] execute_tool get_stock_price                   0.79s
+    [trace + 212.9s] tools/call get_technical_indicators            0.79s
+    [trace + 212.9s] execute_tool get_technical_indicators          0.79s
+    [trace + 216.5s] chat gemini-3.5-flash-lite                     3.61s  2195 in / 837 out
+    [trace + 216.5s] invoke_agent Technical Analyst                 5.76s  4052 in / 882 out
+    [trace + 216.5s] message.send                                   0.00s
+    [trace + 216.5s] executor.process Technical Analyst             5.76s
+    [trace + 216.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 216.6s] message.send                                   0.00s
+    [trace + 216.6s] message.send                                   0.00s
+    [trace + 216.6s] message.send                                   0.00s
+    [trace + 216.6s] message.send                                   0.00s
+    [trace + 218.6s] chat gemini-3.5-flash-lite                     2.00s  9046 in / 316 out
+    [trace + 218.6s] invoke_agent Investment Research Manager       2.00s  9046 in / 316 out
+    [trace + 218.6s] message.send                                   0.00s
+    [trace + 218.6s] executor.process magentic_orchestrator         2.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] executor.process Fundamentals Analyst          0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 218.7s] executor.process Risk Analyst                  0.00s
+    [trace + 218.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 219.7s] chat gemini-3.5-flash-lite                     1.06s  2922 in / 17 out
+    [trace + 222.6s] execute_tool search_news                       2.90s
+    [trace + 226.0s] chat gemini-3.5-flash-lite                     3.40s  6644 in / 545 out
+    [trace + 226.0s] invoke_agent News & Sentiment Analyst          7.36s  9566 in / 562 out
+    [trace + 226.0s] message.send                                   0.00s
+    [trace + 226.0s] executor.process News & Sentiment Analyst      7.36s
+    [trace + 226.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 226.1s] message.send                                   0.00s
+    [trace + 226.1s] message.send                                   0.00s
+    [trace + 226.1s] message.send                                   0.00s
+    [trace + 226.1s] message.send                                   0.00s
+    [trace + 228.0s] chat gemini-3.5-flash-lite                     1.91s  13380 in / 370 out
+    [trace + 228.0s] invoke_agent Investment Research Manager       1.91s  13380 in / 370 out
+    [trace + 228.0s] message.send                                   0.00s
+    [trace + 228.0s] executor.process magentic_orchestrator         1.92s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] executor.process Fundamentals Analyst          0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] executor.process Technical Analyst             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 228.1s] executor.process Risk Analyst                  0.00s
+    [trace + 228.1s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 232.5s] chat gemini-3.5-flash-lite                     4.46s  7316 in / 857 out
+    [trace + 232.5s] invoke_agent Macro & Investment Thesis Analyst   4.46s  7316 in / 857 out
+    [trace + 232.5s] message.send                                   0.00s
+    [trace + 232.5s] executor.process Macro & Investment Thesis Analyst   4.46s
+    [trace + 232.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 232.6s] message.send                                   0.00s
+    [trace + 232.6s] message.send                                   0.00s
+    [trace + 232.6s] message.send                                   0.00s
+    [trace + 232.6s] message.send                                   0.00s
+    [trace + 234.7s] chat gemini-3.5-flash-lite                     2.07s  14312 in / 336 out
+    [trace + 234.7s] invoke_agent Investment Research Manager       2.07s  14312 in / 336 out
+    [trace + 234.7s] message.send                                   0.00s
+    [trace + 234.7s] executor.process magentic_orchestrator         2.08s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] executor.process Fundamentals Analyst          0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] executor.process Technical Analyst             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 234.7s] executor.process Risk Analyst                  0.00s
+    [trace + 234.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 240.9s] chat gemini-3.5-flash-lite                     6.19s  8177 in / 1173 out
+    [trace + 240.9s] invoke_agent Risk Analyst                      6.19s  8177 in / 1173 out
+    [trace + 240.9s] message.send                                   0.00s
+    [trace + 240.9s] executor.process Risk Analyst                  6.19s
+    [trace + 241.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 241.0s] message.send                                   0.00s
+    [trace + 241.0s] message.send                                   0.00s
+    [trace + 241.0s] message.send                                   0.00s
+    [trace + 241.0s] message.send                                   0.00s
+    [trace + 243.1s] chat gemini-3.5-flash-lite                     2.08s  15554 in / 280 out
+    [trace + 243.1s] invoke_agent Investment Research Manager       2.08s  15554 in / 280 out
+    [trace + 246.8s] chat gemini-3.5-flash-lite                     3.78s  15067 in / 655 out
+    [trace + 246.8s] invoke_agent Investment Research Manager       3.78s  15067 in / 655 out
+    [trace + 246.9s] executor.process magentic_orchestrator         5.86s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] executor.process Fundamentals Analyst          0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] executor.process Technical Analyst             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 246.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 247.0s] workflow.run                                  50.87s
+    [trace + 250.2s] chat gemini-3.5-flash-lite                     3.14s  6328 in / 635 out
+    [trace + 250.2s] invoke_agent Synthesis & Allocation Analyst    3.14s  6328 in / 635 out
+    [trace + 253.8s] chat gemini-3.5-flash-lite                     3.59s  4834 in / 585 out
+    [trace + 253.8s] invoke_agent Bull Analyst                      3.59s  4834 in / 585 out
+    [trace + 258.8s] chat gemini-3.5-flash-lite                     5.02s  5935 in / 1199 out
+    [trace + 258.8s] invoke_agent Risk Analyst                      5.02s  5935 in / 1199 out
+    [trace + 262.3s] chat gemini-3.5-flash-lite                     3.48s  2324 in / 477 out
+    [trace + 262.3s] invoke_agent Bull Analyst                      3.48s  2324 in / 477 out
+    [trace + 265.4s] chat gemini-3.5-flash-lite                     3.08s  9346 in / 747 out
+    [trace + 265.4s] invoke_agent Synthesis & Allocation Analyst    3.08s  9346 in / 747 out
+    [trace + 266.6s] chat gemini-3.5-flash-lite                     1.16s  1390 in / 102 out
+    [trace + 266.6s] invoke_agent Evaluator                         1.16s  1390 in / 102 out
+    [trace + 266.6s] investment_research TSM                       76.95s
+    [trace + 322.7s] chat gemini-3.5-flash-lite                     1.62s  2556 in / 152 out
+    [trace + 322.7s] invoke_agent Investment Assistant              1.62s  2556 in / 152 out
+    [trace + 323.2s] initialize                                     0.56s
+    [trace + 323.3s] tools/list                                     0.00s
+    [trace + 323.3s] prompts/list                                   0.00s
+    [trace + 323.4s] workflow.build                                 0.00s
+    [trace + 323.4s] edge_group.process InternalEdgeGroup           0.00s
+    [trace + 327.6s] chat gemini-3.5-flash-lite                     4.13s  3564 in / 927 out
+    [trace + 327.6s] invoke_agent Investment Research Manager       4.13s  3564 in / 927 out
+    [trace + 329.4s] chat gemini-3.5-flash-lite                     1.83s  4663 in / 190 out
+    [trace + 329.4s] invoke_agent Investment Research Manager       1.83s  4663 in / 190 out
+    [trace + 332.4s] chat gemini-3.5-flash-lite                     2.98s  6472 in / 448 out
+    [trace + 332.4s] invoke_agent Investment Research Manager       2.98s  6472 in / 448 out
+    [trace + 332.4s] message.send                                   0.00s
+    [trace + 332.4s] executor.process magentic_orchestrator         8.94s
+    [trace + 332.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 332.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 332.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 332.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 332.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 337.5s] chat gemini-3.5-flash-lite                     5.05s  740 in / 1238 out
+    [trace + 337.5s] invoke_agent Fundamentals Analyst              5.05s  740 in / 1238 out
+    [trace + 337.5s] message.send                                   0.00s
+    [trace + 337.5s] executor.process Fundamentals Analyst          5.05s
+    [trace + 337.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 337.5s] message.send                                   0.00s
+    [trace + 337.5s] message.send                                   0.00s
+    [trace + 337.5s] message.send                                   0.00s
+    [trace + 337.5s] message.send                                   0.00s
+    [trace + 339.8s] chat gemini-3.5-flash-lite                     2.23s  7822 in / 440 out
+    [trace + 339.8s] invoke_agent Investment Research Manager       2.23s  7822 in / 440 out
+    [trace + 339.8s] message.send                                   0.00s
+    [trace + 339.8s] executor.process magentic_orchestrator         2.24s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] executor.process Technical Analyst             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 339.8s] executor.process Risk Analyst                  0.00s
+    [trace + 339.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 341.1s] chat gemini-3.5-flash-lite                     1.29s  2362 in / 45 out
+    [trace + 341.9s] tools/call get_stock_price                     0.79s
+    [trace + 341.9s] execute_tool get_stock_price                   0.79s
+    [trace + 341.9s] tools/call get_technical_indicators            0.79s
+    [trace + 341.9s] execute_tool get_technical_indicators          0.79s
+    [trace + 345.5s] chat gemini-3.5-flash-lite                     3.56s  2703 in / 967 out
+    [trace + 345.5s] invoke_agent Technical Analyst                 5.65s  5065 in / 1012 out
+    [trace + 345.5s] message.send                                   0.00s
+    [trace + 345.5s] executor.process Technical Analyst             5.65s
+    [trace + 345.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 345.5s] message.send                                   0.00s
+    [trace + 345.5s] message.send                                   0.00s
+    [trace + 345.5s] message.send                                   0.00s
+    [trace + 345.5s] message.send                                   0.00s
+    [trace + 347.7s] chat gemini-3.5-flash-lite                     2.14s  9258 in / 309 out
+    [trace + 347.7s] invoke_agent Investment Research Manager       2.14s  9258 in / 309 out
+    [trace + 347.7s] message.send                                   0.00s
+    [trace + 347.7s] executor.process magentic_orchestrator         2.14s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] executor.process Fundamentals Analyst          0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 347.7s] executor.process Risk Analyst                  0.00s
+    [trace + 347.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 348.8s] chat gemini-3.5-flash-lite                     1.09s  3498 in / 17 out
+    [trace + 352.3s] execute_tool search_news                       3.52s
+    [trace + 355.7s] chat gemini-3.5-flash-lite                     3.36s  7779 in / 560 out
+    [trace + 355.7s] invoke_agent News & Sentiment Analyst          7.97s  11277 in / 577 out
+    [trace + 355.7s] message.send                                   0.00s
+    [trace + 355.7s] executor.process News & Sentiment Analyst      7.97s
+    [trace + 355.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 355.8s] message.send                                   0.00s
+    [trace + 355.8s] message.send                                   0.00s
+    [trace + 355.8s] message.send                                   0.00s
+    [trace + 355.8s] message.send                                   0.00s
+    [trace + 357.8s] chat gemini-3.5-flash-lite                     1.99s  14166 in / 378 out
+    [trace + 357.8s] invoke_agent Investment Research Manager       1.99s  14166 in / 378 out
+    [trace + 357.8s] message.send                                   0.00s
+    [trace + 357.8s] executor.process magentic_orchestrator         2.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] executor.process Fundamentals Analyst          0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] executor.process Technical Analyst             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 357.8s] executor.process Risk Analyst                  0.00s
+    [trace + 357.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 364.2s] chat gemini-3.5-flash-lite                     6.39s  8479 in / 1200 out
+    [trace + 364.2s] invoke_agent Macro & Investment Thesis Analyst   6.39s  8479 in / 1200 out
+    [trace + 364.2s] message.send                                   0.00s
+    [trace + 364.2s] executor.process Macro & Investment Thesis Analyst   6.39s
+    [trace + 364.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 364.3s] message.send                                   0.00s
+    [trace + 364.3s] message.send                                   0.00s
+    [trace + 364.3s] message.send                                   0.00s
+    [trace + 364.3s] message.send                                   0.00s
+    [trace + 366.9s] chat gemini-3.5-flash-lite                     2.59s  15454 in / 428 out
+    [trace + 366.9s] invoke_agent Investment Research Manager       2.59s  15454 in / 428 out
+    [trace + 366.9s] message.send                                   0.00s
+    [trace + 366.9s] executor.process magentic_orchestrator         2.60s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] executor.process Fundamentals Analyst          0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] executor.process Technical Analyst             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 366.9s] executor.process Risk Analyst                  0.00s
+    [trace + 366.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 373.4s] chat gemini-3.5-flash-lite                     6.43s  9701 in / 1261 out
+    [trace + 373.4s] invoke_agent Risk Analyst                      6.43s  9701 in / 1261 out
+    [trace + 373.4s] message.send                                   0.00s
+    [trace + 373.4s] executor.process Risk Analyst                  6.43s
+    [trace + 373.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 373.4s] message.send                                   0.00s
+    [trace + 373.4s] message.send                                   0.00s
+    [trace + 373.4s] message.send                                   0.00s
+    [trace + 373.4s] message.send                                   0.00s
+    [trace + 375.6s] chat gemini-3.5-flash-lite                     2.19s  16815 in / 288 out
+    [trace + 375.6s] invoke_agent Investment Research Manager       2.19s  16815 in / 288 out
+    [trace + 393.1s] chat gemini-3.5-flash-lite                    17.45s  16328 in / 808 out
+    [trace + 393.1s] invoke_agent Investment Research Manager      17.45s  16328 in / 808 out
+    [trace + 393.1s] executor.process magentic_orchestrator        19.64s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] executor.process Fundamentals Analyst          0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] executor.process Technical Analyst             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 393.2s] workflow.run                                  69.79s
+    [trace + 396.4s] chat gemini-3.5-flash-lite                     3.04s  7500 in / 622 out
+    [trace + 396.4s] invoke_agent Synthesis & Allocation Analyst    3.04s  7500 in / 622 out
+    [trace + 399.3s] chat gemini-3.5-flash-lite                     2.94s  5853 in / 479 out
+    [trace + 399.3s] invoke_agent Bull Analyst                      2.94s  5853 in / 479 out
+    [trace + 404.5s] chat gemini-3.5-flash-lite                     5.17s  6848 in / 1072 out
+    [trace + 404.5s] invoke_agent Risk Analyst                      5.17s  6848 in / 1072 out
+    [trace + 407.2s] chat gemini-3.5-flash-lite                     2.75s  2091 in / 523 out
+    [trace + 407.2s] invoke_agent Bull Analyst                      2.75s  2091 in / 523 out
+    [trace + 410.4s] chat gemini-3.5-flash-lite                     3.17s  10320 in / 727 out
+    [trace + 410.4s] invoke_agent Synthesis & Allocation Analyst    3.17s  10320 in / 727 out
+    [trace + 411.6s] chat gemini-3.5-flash-lite                     1.23s  1371 in / 100 out
+    [trace + 411.6s] invoke_agent Evaluator                         1.23s  1371 in / 100 out
+    [trace + 411.6s] investment_research AMZN                      88.95s
+    [trace + 458.0s] chat gemini-3.5-flash-lite                     2.07s  2708 in / 134 out
+    [trace + 458.0s] invoke_agent Investment Assistant              2.07s  2708 in / 134 out
+    [trace + 458.6s] initialize                                     0.55s
+    [trace + 458.6s] tools/list                                     0.00s
+    [trace + 458.6s] prompts/list                                   0.00s
+    [trace + 458.7s] workflow.build                                 0.00s
+    [trace + 458.7s] edge_group.process InternalEdgeGroup           0.00s
+    [trace + 462.1s] chat gemini-3.5-flash-lite                     3.40s  3566 in / 566 out
+    [trace + 462.1s] invoke_agent Investment Research Manager       3.40s  3566 in / 566 out
+    [trace + 463.9s] chat gemini-3.5-flash-lite                     1.81s  4304 in / 273 out
+    [trace + 463.9s] invoke_agent Investment Research Manager       1.81s  4304 in / 273 out
+    [trace + 466.0s] chat gemini-3.5-flash-lite                     2.07s  6197 in / 371 out
+    [trace + 466.0s] invoke_agent Investment Research Manager       2.07s  6197 in / 371 out
+    [trace + 466.0s] message.send                                   0.00s
+    [trace + 466.0s] executor.process magentic_orchestrator         7.28s
+    [trace + 466.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 466.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 466.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 466.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 466.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 470.6s] chat gemini-3.5-flash-lite                     4.55s  725 in / 1048 out
+    [trace + 470.6s] invoke_agent Fundamentals Analyst              4.56s  725 in / 1048 out
+    [trace + 470.6s] message.send                                   0.00s
+    [trace + 470.6s] executor.process Fundamentals Analyst          4.56s
+    [trace + 470.7s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 470.7s] message.send                                   0.00s
+    [trace + 470.7s] message.send                                   0.00s
+    [trace + 470.7s] message.send                                   0.00s
+    [trace + 470.7s] message.send                                   0.00s
+    [trace + 472.5s] chat gemini-3.5-flash-lite                     1.83s  7342 in / 348 out
+    [trace + 472.5s] invoke_agent Investment Research Manager       1.83s  7342 in / 348 out
+    [trace + 472.5s] message.send                                   0.00s
+    [trace + 472.5s] executor.process magentic_orchestrator         1.83s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.5s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] executor.process Technical Analyst             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 472.6s] executor.process Risk Analyst                  0.00s
+    [trace + 472.6s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 473.8s] chat gemini-3.5-flash-lite                     1.23s  2126 in / 45 out
+    [trace + 474.4s] tools/call get_stock_price                     0.60s
+    [trace + 474.4s] execute_tool get_stock_price                   0.60s
+    [trace + 474.4s] tools/call get_technical_indicators            0.60s
+    [trace + 474.4s] execute_tool get_technical_indicators          0.60s
+    [trace + 478.2s] chat gemini-3.5-flash-lite                     3.80s  2467 in / 832 out
+    [trace + 478.2s] invoke_agent Technical Analyst                 5.64s  4593 in / 877 out
+    [trace + 478.2s] message.send                                   0.00s
+    [trace + 478.2s] executor.process Technical Analyst             5.64s
+    [trace + 478.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 478.2s] message.send                                   0.00s
+    [trace + 478.2s] message.send                                   0.00s
+    [trace + 478.2s] message.send                                   0.00s
+    [trace + 478.2s] message.send                                   0.00s
+    [trace + 480.1s] chat gemini-3.5-flash-lite                     1.87s  8597 in / 303 out
+    [trace + 480.1s] invoke_agent Investment Research Manager       1.87s  8597 in / 303 out
+    [trace + 480.1s] message.send                                   0.00s
+    [trace + 480.1s] executor.process magentic_orchestrator         1.87s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] executor.process Fundamentals Analyst          0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 480.2s] executor.process Risk Analyst                  0.00s
+    [trace + 480.2s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 481.4s] chat gemini-3.5-flash-lite                     1.18s  3164 in / 17 out
+    [trace + 484.7s] execute_tool search_news                       3.31s
+    [trace + 488.8s] chat gemini-3.5-flash-lite                     4.09s  7445 in / 776 out
+    [trace + 488.8s] invoke_agent News & Sentiment Analyst          8.58s  10609 in / 793 out
+    [trace + 488.8s] message.send                                   0.00s
+    [trace + 488.8s] executor.process News & Sentiment Analyst      8.58s
+    [trace + 488.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 488.8s] message.send                                   0.00s
+    [trace + 488.8s] message.send                                   0.00s
+    [trace + 488.8s] message.send                                   0.00s
+    [trace + 488.8s] message.send                                   0.00s
+    [trace + 491.3s] chat gemini-3.5-flash-lite                     2.44s  13712 in / 362 out
+    [trace + 491.3s] invoke_agent Investment Research Manager       2.44s  13712 in / 362 out
+    [trace + 491.3s] message.send                                   0.00s
+    [trace + 491.3s] executor.process magentic_orchestrator         2.45s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] executor.process Fundamentals Analyst          0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] executor.process Technical Analyst             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 491.3s] executor.process Risk Analyst                  0.00s
+    [trace + 491.3s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 496.7s] chat gemini-3.5-flash-lite                     5.38s  8362 in / 987 out
+    [trace + 496.7s] invoke_agent Macro & Investment Thesis Analyst   5.38s  8362 in / 987 out
+    [trace + 496.7s] message.send                                   0.00s
+    [trace + 496.7s] executor.process Macro & Investment Thesis Analyst   5.38s
+    [trace + 496.8s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 496.8s] message.send                                   0.00s
+    [trace + 496.8s] message.send                                   0.00s
+    [trace + 496.8s] message.send                                   0.00s
+    [trace + 496.8s] message.send                                   0.00s
+    [trace + 498.9s] chat gemini-3.5-flash-lite                     2.08s  14779 in / 392 out
+    [trace + 498.9s] invoke_agent Investment Research Manager       2.08s  14779 in / 392 out
+    [trace + 498.9s] message.send                                   0.00s
+    [trace + 498.9s] executor.process magentic_orchestrator         2.09s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] executor.process Fundamentals Analyst          0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] executor.process Technical Analyst             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 498.9s] executor.process Risk Analyst                  0.00s
+    [trace + 498.9s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 504.9s] chat gemini-3.5-flash-lite                     5.97s  9376 in / 1170 out
+    [trace + 504.9s] invoke_agent Risk Analyst                      5.97s  9376 in / 1170 out
+    [trace + 504.9s] message.send                                   0.00s
+    [trace + 504.9s] executor.process Risk Analyst                  5.97s
+    [trace + 505.0s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 505.0s] message.send                                   0.00s
+    [trace + 505.0s] message.send                                   0.00s
+    [trace + 505.0s] message.send                                   0.00s
+    [trace + 505.0s] message.send                                   0.00s
+    [trace + 507.2s] chat gemini-3.5-flash-lite                     2.27s  16046 in / 349 out
+    [trace + 507.2s] invoke_agent Investment Research Manager       2.27s  16046 in / 349 out
+    [trace + 511.3s] chat gemini-3.5-flash-lite                     4.08s  15559 in / 750 out
+    [trace + 511.3s] invoke_agent Investment Research Manager       4.09s  15559 in / 750 out
+    [trace + 511.3s] executor.process magentic_orchestrator         6.36s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] executor.process Fundamentals Analyst          0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] executor.process Technical Analyst             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] executor.process News & Sentiment Analyst      0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] executor.process Macro & Investment Thesis Analyst   0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.4s] edge_group.process SingleEdgeGroup             0.00s
+    [trace + 511.5s] workflow.run                                  52.76s
+    [trace + 514.6s] chat gemini-3.5-flash-lite                     3.09s  7030 in / 624 out
+    [trace + 514.6s] invoke_agent Synthesis & Allocation Analyst    3.09s  7030 in / 624 out
+    [trace + 517.6s] chat gemini-3.5-flash-lite                     2.92s  5441 in / 439 out
+    [trace + 517.6s] invoke_agent Bull Analyst                      2.92s  5441 in / 439 out
+    [trace + 522.3s] chat gemini-3.5-flash-lite                     4.76s  6395 in / 1053 out
+    [trace + 522.3s] invoke_agent Risk Analyst                      4.76s  6395 in / 1053 out
+    [trace + 525.7s] chat gemini-3.5-flash-lite                     3.38s  2032 in / 461 out
+    [trace + 525.7s] invoke_agent Bull Analyst                      3.38s  2032 in / 461 out
+    [trace + 528.6s] chat gemini-3.5-flash-lite                     2.90s  9727 in / 656 out
+    [trace + 528.6s] invoke_agent Synthesis & Allocation Analyst    2.90s  9727 in / 656 out
+    [trace + 530.2s] chat gemini-3.5-flash-lite                     1.60s  1296 in / 102 out
+    [trace + 530.2s] invoke_agent Evaluator                         1.60s  1296 in / 102 out
+    [trace + 530.2s] investment_research AMZN                      72.20s
