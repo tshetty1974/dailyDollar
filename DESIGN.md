@@ -36,13 +36,12 @@ schema enforces attribution on the evidence list, not on the narrative fields
 - **Fundamentals are only grounded for companies whose filings have been ingested.**
   Other listed companies are analysed on price, news and macro; the system says
   so explicitly rather than silently producing a weaker answer.
-- **This is a research tool, not an advisory product.** It produces analysis with
-  stated assumptions, not personalised financial advice, and does not execute
-  trades.
-
+- **This is a research tool, not an advisory product.** 
 ---
 
-## 2. Requirements traceability
+## 2. Requirements traceability 
+
+Here requirement is serialised in accordance to the functional requirements provided
 
 | # | Requirement | Implemented in | Evidence |
 |---|---|---|---|
@@ -481,16 +480,13 @@ A full exported trace is in [`sample-trace.log`](sample-trace.log).
   doing; 3.3 requires a debate every run. Trade-off: less native, but guaranteed
   and three predictable calls.
 - **Synthesis runs twice.** Draft before the debate, draft after, then diff.
-  Trade-off: one extra large call, in exchange for the debate's effect being
+  Trade-off: one extra call, in exchange for the debate's effect being
   observable rather than self-reported.
 - **Exactly one agent allocates.** Prevents allocation logic leaking into five
   prompts and gives constraints a single enforcement point.
 - **Structured output only at the boundary.** Specialists stay prose; the schema
   makes 3.5 and 3.3 mechanically enforceable. Trade-off: a required field
   guarantees presence, not truth.
-- **Prompt-level schema rather than native.** The Gemini client only extracts a
-  schema from a mapping, not a Pydantic class, so the shape is spelled out in the
-  prompt. Trade-off: must be kept in sync by hand.
 - **Specialists' raw text, not the manager's summary.** Citations survive.
   Trade-off: a larger synthesis prompt.
 - **Fundamentals get pre-fetched evidence; Technical gets live tools.** Trade-off:
@@ -501,6 +497,12 @@ A full exported trace is in [`sample-trace.log`](sample-trace.log).
   fails silently when a new call site forgets it.
 - **A2A exposed but not used internally.** Inside one process it adds a hop, a
   process and a failure mode for interoperability that isn't needed.
+- **Checkpointing stops before the final synthesis.** Per-candidate research and
+  the debate are checkpointed; the post-debate synthesis, the evaluation and any
+  revision are not. Those are the last two or three calls of a run, each depends
+  on everything before it, and the state to preserve is entangled. Trade-off: a
+  crash at the very end repays a couple of calls, against carrying checkpoint
+  logic through a stage where the saving would be marginal.
 - **Custom span processor alongside the exporter.** Live progress is impossible
   with batched export alone - a lesson learned diagnosing a phantom hang.
 
@@ -508,40 +510,12 @@ A full exported trace is in [`sample-trace.log`](sample-trace.log).
 
 ## 7. Known limitations
 
-- **Framework workflow checkpoints are written but never read.** Resumption comes
-  entirely from the run-level layer.
-- **The remote Risk Analyst has never run inside the orchestrator.** The
-  substitution is one line but unverified as a Magentic participant.
-- **The evaluator is verified only at the extremes** (1/1/1 and 5/5/5).
-  Calibration on a borderline draft is untested.
-- **The reflection loop can only re-synthesise, never re-research.** A critique
-  is fed back into a fresh synthesis call over the *same* findings. If a draft is
-  weak because the evidence itself is thin - a candidate with no filings on file,
-  say - the loop cannot fix it, because nothing sends the run back to the
-  orchestrator for more research.
-- **The post-debate synthesis sees its own earlier draft**, which anchors it. The
-  bias suppresses observed debate impact rather than inflating it.
-- **Required fields guarantee presence, not truth.** Before the debate existed,
-  the model wrote a plausible `debate_resolution` describing one that never
-  happened.
-- **Attribution is enforced on the evidence list only.** Every `EvidenceItem`
-  must carry a `source`, but the narrative fields - `thesis`, `key_risks`,
-  `assumptions` and `summary` - are free text and are not individually sourced. A
-  statement such as "total reliance on third-party foundries in Taiwan" reaches
-  the user with no citation behind it. The schema also checks only that a source
-  was *given*, not that it is real: "general knowledge" would validate. Extending
-  attribution to the narrative fields, and checking source strings against the
-  retrieved chunks, are both worth doing.
-- **Holdings assume the user acted on the advice.** No execution confirmation.
-- **Memory grows without pruning.** The recall brief is bounded; the file is not.
-- **Only the ingested companies can be grounded.** Others are analysed without
-  fundamentals, flagged but still answered.
-- **Interrupting a run leaks the MCP subprocess** - the stdio context manager
-  cannot clean up on `KeyboardInterrupt`.
-- **The final two or three calls are not checkpointed.** Synthesis 2, evaluation
-  and revision would be repeated after a crash.
-
----
+- **The remote Risk Analyst has never run inside the orchestrator.** The orchestrator uses the in-process instance deliberately, so the pipeline does not depend on a second process being alive. Substituting A2AAgent(url=...) is a one-line change and A2A itself is verified end to end from a separate process.
+- **The reflection loop can only re-synthesise, never re-research.** critique goes back into a fresh synthesis call over the same findings. That matches what the evaluator scores - a breached constraint or an unaddressed risk is a write-up problem, fixable from evidence already gathered. It also matches what a second research pass would actually yield: the analysts query the same filings, the same market data and the same news, so re-running them returns much the same evidence at several minutes' cost. Escalating to more research would mostly buy a slower version of the same answer.
+- **The post-debate synthesis sees its own earlier draft**, When a recommendation is accepted, its allocations are recorded as the user's holdings. Nothing confirms execution, because the system is a research tool with no brokerage integration - there is no source of truth for what was actually bought. The consequence is bounded: holdings are context for later conversations, not an input to any calculation, so a stale entry degrades a follow-up answer rather than corrupting an analysis.
+- **Holdings assume the user acted on the advice.** When a recommendation is accepted, its allocations are recorded as the user's holdings. Nothing confirms execution, because the system is a research tool with no brokerage integration - there is no source of truth for what was actually bought. The consequence is bounded: holdings are context for later conversations, not an input to any calculation, so a stale entry degrades a follow-up answer rather than corrupting an analysis.
+- **Only the ingested companies can be grounded.** Fundamentals are retrieved from the vector store, so a company whose filings have not been ingested has no evidence base. This is a direct consequence of requirement 3.5 rather than an oversight: analysing such a company on remembered financials is exactly what "grounded in retrieved source documents" forbids. The system does not refuse - the technical, news and macro analysts work on any listed company - but it names the missing grounding in the output and the conviction score should be read accordingly.
+- **Interrupting a run leaks the MCP subprocess** - The market-data server runs as a stdio subprocess inside an async context manager. On KeyboardInterrupt the interpreter tears down before the context manager's cleanup runs, leaving an orphaned process. It is idle and harmless - it holds no ports and shares no state - but it accumulates across interrupted runs and has to be cleared manually. A signal handler around the session would fix it.
 
 ## 8. Future scope
 
@@ -550,23 +524,18 @@ A full exported trace is in [`sample-trace.log`](sample-trace.log).
   round. The clearest cost lever, with measurements to justify it.
 - **Return the retrieval tool to the Fundamentals Analyst**, so it can question
   the filings rather than work from one fixed query.
-- **Wire framework checkpoint resume**, so an interrupted orchestration continues
-  mid-flight.
+- **Wire framework checkpoint resume**, Resume an interrupted orchestration mid-flight. The framework already persists workflow state - conversation, task ledger, progress - at every step. What is missing is the read path: identifying the right checkpoint for an interrupted candidate and re-entering the workflow at that point. Resumption today works at the candidate level, so an interrupted run repeats at most one stock's orchestration rather than all of them, which was the expensive case and the one worth solving first. The writes are enabled so the capability is wired and the remaining work is the read side only.
 - **Retry and backoff around model calls.** A stall currently waits out a 900s
   timeout; the timeout clarifies the failure but does not recover from it.
-- **Borderline evaluator test cases**, to test calibration rather than extremes.
-- **An independent post-debate synthesis** that does not see its earlier draft,
-  removing anchoring from the impact measurement.
 - **Automated, broader ingest**, making the grounded universe a configuration
   choice rather than whatever is on disk.
-- **Route the orchestrator through A2A optionally**, proving the abstraction end
-  to end.
+- **Retrieve from memory by relevance rather than recency**. The most recent recommendation is injected in full and the previous five as headlines, which covers follow-ups about the current portfolio. Questions reaching further back would be better served by searching the stored history the way the RAG layer searches filings - the data is all there, it simply isn't indexed.
 
 ---
 
 ## 9. Cost and performance
 
-A two-candidate run, measured from the trace:
+A sample two-candidate run, measured from the trace:
 
 | Metric | Value |
 |---|---|
@@ -595,8 +564,6 @@ ranged from 0.98s to 196s for comparable work.
 
 ## 10. Testing strategy
 
-Tests are ordered cheapest-first, so a failure is found before an expensive run.
-
 | Test | Cost | Proves |
 |---|---|---|
 | `test_models.py` | free | Contracts accept valid data and reject malformed output |
@@ -610,47 +577,4 @@ Tests are ordered cheapest-first, so a failure is found before an expensive run.
 | `test_a2a.py` | 1 call | The Risk Analyst is callable across runtimes |
 | `test_orchestration.py` | ~40 calls | The pipeline end to end |
 
----
 
-## 11. Appendix
-
-### 11.1 Glossary
-
-| Term | Meaning |
-|---|---|
-| **Magentic** | Manager-led multi-agent orchestration pattern |
-| **Span** | One timed operation in a trace, with attributes and a parent |
-| **Span processor** | Framework hook called as spans start and end |
-| **Exporter** | Sends spans to a backend; lives inside a processor |
-| **OTLP** | OpenTelemetry's wire protocol |
-| **MCP** | Model Context Protocol - how an agent consumes tools |
-| **A2A** | Agent-to-Agent protocol - how an agent is consumed by others |
-| **Context provider** | Framework hook that injects context before every run |
-| **Agent card** | A2A discovery document describing an agent |
-
-### 11.2 Repository layout
-
-```
-src/
-├── main.py              terminal front end
-├── conversation.py      conversation engine (interface-agnostic)
-├── models.py            input, output and evaluation contracts
-├── observability.py     OpenTelemetry wiring and trace summary
-├── universe.py          which companies can be grounded
-├── a2a_server.py        Risk Analyst as an A2A service
-├── agents/              eight agents (manager and assistant live elsewhere)
-├── orchestration/       Magentic workflow, debate, synthesis, evaluation
-├── memory/              long-term memory, context provider, checkpoints
-├── mcp/                 market-data MCP server
-├── rag/                 ingest, process, embed, retrieve
-└── tools/               SEC and news tools
-app.py                   Streamlit chat UI
-tests/                   ten tests, cheapest first
-```
-
-### 11.3 Configuration and secrets
-
-`.env` is gitignored; `.env.example` documents every variable with no values.
-Two keys are required (`GEMINI_API_KEY`, `MARKETAUX_API_TOKEN`); the OTLP
-variables are optional and the system runs fully without them. No secrets are
-committed.
